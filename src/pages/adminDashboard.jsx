@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateAd, deleteAd, addAd } from '../store/actions/adActions';
 import { Container, Row, Col, Badge, Button, ListGroup, Modal, Form, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import '../pages/adminDashboard.css';
-
 const AdminDashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [newAd, setNewAd] = useState(() => ({
@@ -89,10 +89,11 @@ const AdminDashboard = () => {
       });
       return;
     }
-
-    dispatch(addAd(newAd));
+    const uniqueId = uuidv4();
+    dispatch(addAd({ ...newAd, id: uniqueId }));
     handleCloseModal();
   };
+  
 
   return (
     <Container className="admin-dashboard">
@@ -120,7 +121,7 @@ const AdminDashboard = () => {
         </div>
       </Row>
 
-     <ListGroup>
+      <ListGroup>
   {ads.map((ad, index) => (
     <ListGroup.Item key={ad.id || index}>
       <Card>
