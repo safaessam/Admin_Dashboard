@@ -1,12 +1,33 @@
+.admin-dashboard {
+  margin: 20px;
+}
 
-  .modal-title {
-    margin-bottom: 20px;
-  }
-  
-  .modal-body {
-    margin-bottom: 20px;
-  }
-  
-  .modal-footer {
-    justify-content: space-between;
-  }
+.logout-button {
+  margin-bottom: 20px;
+}
+
+.ads-list {
+  margin-top: 20px;
+}
+
+.ads-list .list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.create-ad-section {
+  margin-top: 40px;
+}
+
+.modal-title {
+  margin-bottom: 20px;
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  justify-content: space-between;
+}
