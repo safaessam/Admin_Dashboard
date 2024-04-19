@@ -70,24 +70,28 @@ const AdminDashboard = () => {
 
   return (
     <Container className="admin-dashboard">
-      <Row className="mb-3">
-        <Col>
-          <Badge variant="primary">
-            <h1>Admin Dashboard</h1>
-          </Badge>
-        </Col>
-          <Col><Button onClick={handleShowModal}>Create New Ad</Button> </Col>
-        <Col className="text-right">
+      <Row className="mb-2">
+      <Col className="col-9">
+  <Badge variant="primary">
+    <h1>Admin Dashboard</h1>
+  </Badge>
+</Col>
+<Col className="col-3" >
           <Button variant="danger" onClick={handleLogout}>
             Logout
           </Button>
-        </Col>
+          </Col>
       </Row>
+          <Col><Button onClick={handleShowModal}>Create New Ad</Button> </Col>
+       <Row>
+        <Col className="text-right">
+        </Col>
       <div className="d-flex justify-content-center">
   <Badge bg="warning">
     <h2 className="text-center">My Advertisement</h2>
   </Badge>
 </div>
+        </Row>
 
       <ListGroup>
         {ads.map((ad) => (
