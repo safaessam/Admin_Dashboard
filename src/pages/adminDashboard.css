@@ -1,0 +1,12 @@
+
+  .modal-title {
+    margin-bottom: 20px;
+  }
+  
+  .modal-body {
+    margin-bottom: 20px;
+  }
+  
+  .modal-footer {
+    justify-content: space-between;
+  }
