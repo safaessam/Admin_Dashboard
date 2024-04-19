@@ -11,13 +11,33 @@ const AdminDashboard = () => {
   const ads = useSelector(state => state.ads);
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [editAd, setEditAd] = useState(null);
+  const [formErrors, setFormErrors] = useState({ media: '', startTime: '', endTime: '' });
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
 
-
+  const handleUpdate = (ad) => {
+    if (!newAd.media || !newAd.startTime || !newAd.endTime) {
+      setFormErrors({
+        media: newAd.media ? '' : 'Media is required',
+        startTime: newAd.startTime ? '' : 'Start Time is required',
+        endTime: newAd.endTime ? '' : 'End Time is required'
+      });
+      return;
+    }
+  
+    dispatch(updateAd({ id: ad.id, ...newAd })); 
+    handleCloseModal();
+  };
+  
+  const handleDelete = (ad) => {
+    dispatch(deleteAd(ad)); 
+    setShowConfirmation(false);
+  };
   
   const handleShowModal = () => {
     setShowModal(true);
@@ -73,6 +93,7 @@ const AdminDashboard = () => {
         {ads.map((ad) => (
           <ListGroup.Item key={ad.id}>
             <Card>
+              <Card.Img src='06648462_34465652_1306166462.orig.jpg' />
               <Card.Body>
                 <Card.Text>
                   Date: {ad.startTime} -- {ad.endTime}
@@ -89,10 +110,23 @@ const AdminDashboard = () => {
           </ListGroup.Item>
         ))}
       </ListGroup>
-     
+      <Modal show={showConfirmation} onHide={() => setShowConfirmation(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this ad?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirmation(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => handleDelete(editAd)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{'Add'} Ad</Modal.Title>
+          <Modal.Title>{editAd ? 'Update' : 'Add'} Ad</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -117,8 +151,8 @@ const AdminDashboard = () => {
           <Button variant="secondary" onClick={handleCloseModal}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={ handleCreateAd}>
-           Create Ad
+          <Button variant="primary" onClick={editAd ? handleUpdate : handleCreateAd}>
+            {editAd ? 'Update' : 'Create Ad'}
           </Button>
         </Modal.Footer>
       </Modal>
