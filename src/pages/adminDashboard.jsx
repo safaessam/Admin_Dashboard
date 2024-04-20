@@ -33,7 +33,7 @@ const AdminDashboard = () => {
     navigate('/login');
   };
 
-  const handleUpdate = (ad) => {
+  const handleUpdate = () => {
     if (!newAd.media || !newAd.startTime || !newAd.endTime) {
       setFormErrors({
         media: newAd.media ? '' : 'Media is required',
@@ -42,10 +42,11 @@ const AdminDashboard = () => {
       });
       return;
     }
-
-    dispatch(updateAd({ id: ad.id, ...newAd }));
+  
+    dispatch(updateAd({ ...editAd, ...newAd }));
     handleCloseModal();
   };
+  
 
   const handleDelete = (ad) => {
     dispatch(deleteAd(ad));
@@ -125,8 +126,12 @@ const AdminDashboard = () => {
   {ads.map((ad, index) => (
     <ListGroup.Item key={ad.id || index}>
       <Card>
-        <Card.Img src={URL.createObjectURL(ad.media)} />
-        <Card.Body>
+      {ad.media.type.startsWith('video/') ? (
+                <Card.Img as="video" src={URL.createObjectURL(ad.media)} controls />
+              ) : (
+                <Card.Img src={URL.createObjectURL(ad.media)} />
+              )}       
+               <Card.Body>
           <Card.Text>
             Date: {ad.startTime} -- {ad.endTime}
           </Card.Text>
