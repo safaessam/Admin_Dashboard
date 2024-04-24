@@ -1,11 +1,11 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/login';
-import AdminDashboard from './pages/adminDashboard';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/AdminDashboard";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const PrivateRoute = ({ element }) => {
-  const isLoggedIn = localStorage.getItem('token');
+  const isLoggedIn = localStorage.getItem("token");
 
   if (!isLoggedIn) {
     return <Navigate to="/login" replace />;
@@ -22,9 +22,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route
           path="/admin-dashboard"
-          element={
-            <PrivateRoute element={<AdminDashboard />} />
-          }
+          element={<PrivateRoute element={<AdminDashboard />} />}
         />
       </Routes>
     </BrowserRouter>
